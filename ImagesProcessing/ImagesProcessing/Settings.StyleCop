@@ -1,0 +1,7 @@
+<StyleCopSettings Version="105">
+  <GlobalSettings>
+    <BooleanProperty Name="ViolationsAsErrors">True</BooleanProperty>
+    <StringProperty Name="LinkedSettingsFile">..\..\Settings.StyleCop</StringProperty>
+    <StringProperty Name="MergeSettingsFiles">Linked</StringProperty>
+  </GlobalSettings>
+</StyleCopSettings>
