@@ -6,9 +6,32 @@ using System.Linq;
 
 namespace ImageProcessingBLL
 {
-    public class ImageProcessor
+    public abstract class ImageHelper
     {
-        private List<Point> ConvertToPoints(Bitmap image)
+        static private Bitmap GetImageSector(Bitmap image, Point startSector, Point endSector)
+        {
+            var newImageHeight = endSector.Y - startSector.Y;
+            var newImageWidth = endSector.X - startSector.X;
+
+            var newImage = new Bitmap(newImageWidth, newImageHeight);
+
+            for (int i = 0; i < newImageWidth; i++)
+            {
+                for (int j = 0; j < newImageHeight; j++)
+                {
+                    newImage.SetPixel(i, j, image.GetPixel(startSector.X + i, startSector.Y + j));
+                }
+            }
+
+            return newImage;
+        }
+
+        /// <summary>
+        /// convert image to list of points
+        /// </summary>
+        /// <param name="image"></param>
+        /// <returns></returns>
+        static public List<Point> ConvertToPoints(Bitmap image)
         {
             var points = new List<Point>();
 
@@ -32,30 +55,12 @@ namespace ImageProcessingBLL
             return points;
         }
 
-        private Bitmap GetImageSector(Bitmap image, Point startSector, Point endSector)
-        {
-            var newImageHeight = endSector.Y - startSector.Y;
-            var newImageWidth = endSector.X - startSector.X;
-
-            var newImage = new Bitmap(newImageWidth, newImageHeight);
-
-            for (int i = 0; i < newImageWidth; i++)
-            {
-                for (int j = 0; j < newImageHeight; j++)
-                {
-                    newImage.SetPixel(i, j, image.GetPixel(startSector.X + i, startSector.Y + j));
-                }
-            }
-
-            return newImage;
-        }
-
         /// <summary>
         /// cut unnecessary parts of image
         /// </summary>
         /// <param name="image">required image with single painted object</param>
         /// <returns>new image</returns>
-        public Bitmap CutImage(Bitmap image)
+        static public Bitmap CutImage(Bitmap image)
         {
             var points = ConvertToPoints(image);
             var start = new Point()
@@ -73,7 +78,7 @@ namespace ImageProcessingBLL
             return GetImageSector(image, start, end);
         }
 
-        public Bitmap ScaleImage(Bitmap image, int height = 0, int width = 0)
+        static public Bitmap ScaleImage(Bitmap image, int height = 0, int width = 0)
         {
             throw new NoNullAllowedException();
         }

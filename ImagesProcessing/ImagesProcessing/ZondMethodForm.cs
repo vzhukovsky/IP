@@ -8,17 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ImageProcessingBLL;
+using ImageProcessingBLL.Zond;
 
 namespace ImagesProcessing
 {
     public partial class ZondMethodForm : Form
     {
-        private ImageProcessor imageProcessor;
+        private ZondProcessor zondProcessor;
         private Bitmap image;
 
         public ZondMethodForm()
         {
-            imageProcessor = new ImageProcessor();
+            zondProcessor = new ZondProcessor();
             InitializeComponent();
         }
 
@@ -35,7 +36,7 @@ namespace ImagesProcessing
         {
             if (image != null)
             {
-                image = imageProcessor.CutImage(image);
+                image = ImageHelper.CutImage(image);
                 imagePictureBox.Image = image;
             }
         }
