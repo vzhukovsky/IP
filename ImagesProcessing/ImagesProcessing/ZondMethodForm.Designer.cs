@@ -34,13 +34,17 @@ namespace ImagesProcessing
             this.imageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zondToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.imagePictureBox = new System.Windows.Forms.PictureBox();
-            this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zondPictureBox = new System.Windows.Forms.PictureBox();
+            this.drawToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imagePictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.zondPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // openFileDialog
@@ -60,20 +64,29 @@ namespace ImagesProcessing
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.loadToolStripMenuItem.Text = "Load";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.saveToolStripMenuItem.Text = "Save";
+            // 
+            // cutToolStripMenuItem
+            // 
+            this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
+            this.cutToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.cutToolStripMenuItem.Text = "Cut";
+            this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
             // 
             // zondToolStripMenuItem
             // 
             this.zondToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadToolStripMenuItem1});
+            this.loadToolStripMenuItem1,
+            this.addToolStripMenuItem,
+            this.drawToolStripMenuItem});
             this.zondToolStripMenuItem.Name = "zondToolStripMenuItem";
             this.zondToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.zondToolStripMenuItem.Text = "Zond";
@@ -83,6 +96,14 @@ namespace ImagesProcessing
             this.loadToolStripMenuItem1.Name = "loadToolStripMenuItem1";
             this.loadToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.loadToolStripMenuItem1.Text = "Load";
+            this.loadToolStripMenuItem1.Click += new System.EventHandler(this.loadToolStripMenuItem1_Click);
+            // 
+            // addToolStripMenuItem
+            // 
+            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addToolStripMenuItem.Text = "Add";
+            this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
             // 
             // mainMenu
             // 
@@ -91,7 +112,7 @@ namespace ImagesProcessing
             this.zondToolStripMenuItem});
             this.mainMenu.Location = new System.Drawing.Point(0, 0);
             this.mainMenu.Name = "mainMenu";
-            this.mainMenu.Size = new System.Drawing.Size(493, 24);
+            this.mainMenu.Size = new System.Drawing.Size(697, 24);
             this.mainMenu.TabIndex = 0;
             this.mainMenu.Text = "mainMenu";
             // 
@@ -104,18 +125,28 @@ namespace ImagesProcessing
             this.imagePictureBox.TabIndex = 1;
             this.imagePictureBox.TabStop = false;
             // 
-            // cutToolStripMenuItem
+            // zondPictureBox
             // 
-            this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
-            this.cutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.cutToolStripMenuItem.Text = "Cut";
-            this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
+            this.zondPictureBox.Location = new System.Drawing.Point(292, 37);
+            this.zondPictureBox.Name = "zondPictureBox";
+            this.zondPictureBox.Size = new System.Drawing.Size(239, 230);
+            this.zondPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.zondPictureBox.TabIndex = 2;
+            this.zondPictureBox.TabStop = false;
+            // 
+            // drawToolStripMenuItem
+            // 
+            this.drawToolStripMenuItem.Name = "drawToolStripMenuItem";
+            this.drawToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.drawToolStripMenuItem.Text = "Draw";
+            this.drawToolStripMenuItem.Click += new System.EventHandler(this.drawToolStripMenuItem_Click);
             // 
             // ZondMethodForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(493, 279);
+            this.ClientSize = new System.Drawing.Size(697, 341);
+            this.Controls.Add(this.zondPictureBox);
             this.Controls.Add(this.imagePictureBox);
             this.Controls.Add(this.mainMenu);
             this.MainMenuStrip = this.mainMenu;
@@ -124,6 +155,7 @@ namespace ImagesProcessing
             this.mainMenu.ResumeLayout(false);
             this.mainMenu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imagePictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.zondPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -140,6 +172,9 @@ namespace ImagesProcessing
         private System.Windows.Forms.MenuStrip mainMenu;
         private System.Windows.Forms.PictureBox imagePictureBox;
         private ToolStripMenuItem cutToolStripMenuItem;
+        private PictureBox zondPictureBox;
+        private ToolStripMenuItem addToolStripMenuItem;
+        private ToolStripMenuItem drawToolStripMenuItem;
 
     }
 }
