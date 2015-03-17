@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace ImageProcessingBLL.Zond
@@ -16,19 +17,28 @@ namespace ImageProcessingBLL.Zond
         /// <param name="image">image for drawing</param>
         /// <param name="zonds">list of zonds</param>
         /// <returns>count of zonds that cross image</returns>
-        public int DrawZondsOnImage(Bitmap image, List<Zond> zonds)
+        public List<bool> DrawZondsOnImage(Bitmap image, List<Zond> zonds)
         {
-            var crossCount = 0;
+            List<bool> crossList = new List<bool>();
 
             foreach (var zond in zonds)
             {
-                if (zond.DrawOnImage(image))
-                {
-                    crossCount++;
-                }
+                crossList.Add(zond.DrawOnImage(image));
             }
 
-            return crossCount;
+            return crossList;
+        }
+
+        public Bitmap GetZondsImage(List<Zond> zonds)
+        {
+            Bitmap image = new Bitmap(50, 50);
+
+            foreach (var zond in zonds)
+            {
+                zond.DrawOnImage(image);
+            }
+
+            return image;
         }
     }
 }

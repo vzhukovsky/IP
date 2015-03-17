@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using ImageProcessingBLL;
 using ImageProcessingBLL.Zond;
 
@@ -21,10 +17,8 @@ namespace ImagesProcessing
 
         public void InitialSetting()
         {
-            zonds = new List<Zond>();
             image = null;
             zondImage = null;
-
             imagePictureBox.Image = null;
             zondPictureBox.Image = null;
         }
@@ -32,9 +26,29 @@ namespace ImagesProcessing
         public ZondMethodForm()
         {
             zondProcessor = new ZondProcessor();
-           
+            zonds = new List<Zond>();
             InitializeComponent();
             InitialSetting();
+        }
+
+        private void ClearZondImage()
+        {
+            zondImage = null;
+            zondPictureBox.Image = null;
+        }
+
+        private void AddColumnToStatusGrid()
+        {
+            dataGridView.Columns.Add(zonds.Count.ToString(), zonds.Count.ToString());
+        }
+
+        private void AddStatusToGrid(List<bool> zondsStatus)
+        {
+            var index = dataGridView.Rows.Count - 1;
+            for (int i = 0; i < zondsStatus.Count; i++)
+            {
+                dataGridView.Rows[index].Cells[i].Value = zondsStatus[i].ToString();
+            }
         }
    
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
@@ -51,7 +65,7 @@ namespace ImagesProcessing
         {
             if (image != null)
             {
-                image = ImageHelper.CutImage(image);
+                image = ImageHelper.ScaleImage(ImageHelper.CutImage(image));
                 imagePictureBox.Image = image;
             }
         }
@@ -70,8 +84,8 @@ namespace ImagesProcessing
             if (zondImage != null)
             {
                 zonds.Add(zondProcessor.ConvertImageToZond(zondImage));
-                zondImage = null;
-                zondPictureBox.Image = null;
+                ClearZondImage();
+                AddColumnToStatusGrid();
             }
         }
 
@@ -79,8 +93,18 @@ namespace ImagesProcessing
         {
             if (image != null && zonds.Count != 0)
             {
-                zondProcessor.DrawZondsOnImage(image, zonds);
-                imagePictureBox.Image = image;
+                var copyImage = image.Clone(new Rectangle(0, 0, image.Width, image.Height), image.PixelFormat);
+                var zondsStatus = zondProcessor.DrawZondsOnImage(copyImage, zonds);
+                AddStatusToGrid(zondsStatus);
+                imagePictureBox.Image = copyImage;
+            }
+        }
+
+        private void showToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (zonds.Count != 0)
+            {
+                zondPictureBox.Image = zondProcessor.GetZondsImage(zonds);
             }
         }
     }

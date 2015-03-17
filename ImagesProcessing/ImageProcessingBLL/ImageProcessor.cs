@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using AForge.Imaging.Filters;
 
 namespace ImageProcessingBLL
 {
@@ -78,9 +79,10 @@ namespace ImageProcessingBLL
             return GetImageSector(image, start, end);
         }
 
-        static public Bitmap ScaleImage(Bitmap image, int height = 0, int width = 0)
+        static public Bitmap ScaleImage(Bitmap image, int width = 50, int height = 50)
         {
-            throw new NoNullAllowedException();
+            var resizer = new ResizeNearestNeighbor(width, height);
+            return resizer.Apply(image);
         }
     };
 }

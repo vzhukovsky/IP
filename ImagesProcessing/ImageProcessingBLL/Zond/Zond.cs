@@ -29,7 +29,7 @@ namespace ImageProcessingBLL.Zond
         /// <returns>true - zond cross image. false - else</returns>
         public bool DrawOnImage(Bitmap image)
         {
-            if (image != null && initialPictureWidth < image.Width && initialPictureHeight < image.Height)
+            if (image != null && initialPictureWidth <= image.Width && initialPictureHeight <= image.Height)
             {
                 var crossedImage = false;
 
