@@ -14,13 +14,13 @@ namespace ImageProcessingBLL
             var newImageHeight = endSector.Y - startSector.Y;
             var newImageWidth = endSector.X - startSector.X;
 
-            var newImage = new Bitmap(newImageWidth, newImageHeight);
+            var newImage = new Bitmap(newImageWidth + 2, newImageHeight + 2);
 
-            for (int i = 0; i < newImageWidth; i++)
+            for (int i = 0; i < newImageWidth + 2; i++)
             {
-                for (int j = 0; j < newImageHeight; j++)
+                for (int j = 0; j < newImageHeight + 2; j++)
                 {
-                    newImage.SetPixel(i, j, image.GetPixel(startSector.X + i, startSector.Y + j));
+                    newImage.SetPixel(i, j, image.GetPixel(startSector.X + i - 1, startSector.Y + j - 1));
                 }
             }
 
