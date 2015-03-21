@@ -56,24 +56,30 @@ namespace ImageProcessingBLL
             return points;
         }
 
+
         /// <summary>
         /// cut unnecessary parts of image
         /// </summary>
         /// <param name="image">required image with single painted object</param>
         /// <returns>new image</returns>
-        static public Bitmap CutImage(Bitmap image)
+        static public Bitmap CutImage(Bitmap image, int indent = 5)
         {
             var points = ConvertToPoints(image);
+            var XMin = points.Min(obj => obj.X);
+            var YMin = points.Min(obj => obj.Y);
+            var XMax = points.Max(obj => obj.X);
+            var YMax = points.Max(obj => obj.Y);
+
             var start = new Point()
             {
-                X = points.Min(obj => obj.X),
-                Y = points.Min(obj => obj.Y)
+                X = XMin > indent ? XMin - indent : XMin,
+                Y = YMin > indent ? YMin - indent : YMin
             };
             
             var end = new Point()
             {
-                X = points.Max(obj => obj.X),
-                Y = points.Max(obj => obj.Y)
+                X = XMax + indent < image.Width ? XMax + indent : XMax,
+                Y = YMax + indent < image.Height ? YMax + indent : YMax
             };
 
             return GetImageSector(image, start, end);
