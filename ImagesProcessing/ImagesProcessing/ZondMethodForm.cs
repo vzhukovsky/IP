@@ -50,6 +50,34 @@ namespace ImagesProcessing
                 dataGridView.Rows[index].Cells[i].Value = zondsStatus[i].ToString();
             }
         }
+
+        private void ShowResult(List<bool> zondsStatus)
+        {
+            if (zondsStatus.Count >= 3)
+            {
+                var result = "Cannot identity!";
+                if (!zondsStatus[0] && !zondsStatus[1] && zondsStatus[2])
+                {
+                    result = "1";
+                }
+                else
+                {
+                    if (zondsStatus[0] && zondsStatus[1] && zondsStatus[2])
+                    {
+                        result = "2";
+                    }
+                    else
+                    {
+                        if (zondsStatus[0] && zondsStatus[1] && !zondsStatus[2])
+                        {
+                            result = "3";
+                        }
+                    }
+                }
+
+                MessageBox.Show(result);
+            }
+        }
    
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -97,6 +125,7 @@ namespace ImagesProcessing
                 var zondsStatus = zondProcessor.DrawZondsOnImage(copyImage, zonds);
                 AddStatusToGrid(zondsStatus);
                 imagePictureBox.Image = copyImage;
+                ShowResult(zondsStatus);
             }
         }
 
