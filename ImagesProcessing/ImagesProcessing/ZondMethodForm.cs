@@ -56,13 +56,13 @@ namespace ImagesProcessing
             if (zondsStatus.Count >= 3)
             {
                 var result = "Cannot identity!";
-                if (!zondsStatus[0] && !zondsStatus[1] && zondsStatus[2])
+                if (!zondsStatus[0] && zondsStatus[1] && !zondsStatus[2])
                 {
                     result = "1";
                 }
                 else
                 {
-                    if (zondsStatus[0] && zondsStatus[1] && zondsStatus[2])
+                    if (zondsStatus[0] && !zondsStatus[1] && zondsStatus[2])
                     {
                         result = "2";
                     }
