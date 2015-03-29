@@ -7,7 +7,7 @@ using AForge.Imaging.Filters;
 
 namespace ImageProcessingBLL
 {
-    public abstract class ImageHelper
+    public abstract partial class ImageHelper
     {
         static private Bitmap GetImageSector(Bitmap image, Point startSector, Point endSector)
         {
@@ -56,7 +56,6 @@ namespace ImageProcessingBLL
             return points;
         }
 
-
         /// <summary>
         /// cut unnecessary parts of image
         /// </summary>
@@ -90,5 +89,14 @@ namespace ImageProcessingBLL
             var resizer = new ResizeNearestNeighbor(width, height);
             return resizer.Apply(image);
         }
+
+        public static void DrawPoints(Bitmap image, List<Point> points, Color color)
+        {
+            for (int i = 0; i < points.Count; i++)
+            {
+                image.SetPixel(points[i].X, points[i].Y, color);
+            }
+        }
+
     };
 }

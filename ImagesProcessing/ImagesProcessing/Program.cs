@@ -13,7 +13,7 @@ namespace ImagesProcessing
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ZondMethodForm());
+            Application.Run(new MainForm());
         }
     }
 }
