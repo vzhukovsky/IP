@@ -28,13 +28,15 @@ namespace ImagesProcessing
             }
         }
 
+        private List<Point> contour; 
+
         private void zhukToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (sourceImage != null)
             {
-                var contour = ImageHelper.СircuitZhukMethod(sourceImage);
+                this.contour = ImageHelper.СircuitZhukMethod(sourceImage, contour == null ? 0 : contour.Max(obj => obj.X) + 5);
                 var contourImage = new Bitmap(sourceImage.Width, sourceImage.Height);
-                ImageHelper.DrawPoints(sourceImage, contour, Color.White);
+                ImageHelper.DrawPoints(sourceImage, contour, Color.Red);
                 ImageHelper.DrawPoints(contourImage, contour, Color.Black);
                 sourceImagePictureBox.Image = sourceImage;
                 contourPictureBox.Image = contourImage;

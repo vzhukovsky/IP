@@ -119,9 +119,9 @@ namespace ImageProcessingBLL
             throw new NotImplementedException();
         }
 
-        public static List<Point> СircuitZhukMethod(Bitmap image)
+        public static List<Point> СircuitZhukMethod(Bitmap image, int shift)
         {
-            for (int i = 0; i < image.Width; i++)
+            for (int i = shift; i < image.Width; i++)
             {
                 for (int j = 0; j < image.Height; j++)
                 {
