@@ -34,7 +34,7 @@ namespace ImagesProcessing
         {
             if (sourceImage != null)
             {
-                this.contour = ImageHelper.СircuitZhukMethod(sourceImage, contour == null ? 0 : contour.Max(obj => obj.X) + 5);
+                this.contour = ImageHelper.СircuitZhukMethod(sourceImage, contour == null ? 0 : contour.Max(obj => obj.X));
                 var contourImage = new Bitmap(sourceImage.Width, sourceImage.Height);
                 ImageHelper.DrawPoints(sourceImage, contour, Color.Red);
                 ImageHelper.DrawPoints(contourImage, contour, Color.Black);

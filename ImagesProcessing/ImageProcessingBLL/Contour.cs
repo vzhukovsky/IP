@@ -121,6 +121,19 @@ namespace ImageProcessingBLL
 
         public static List<Point> СircuitZhukMethod(Bitmap image, int shift)
         {
+//            for (int i = shift; i < image.Width; i++)
+//            {
+//                for (int j = 0; j < image.Height; j++)
+//                {
+//                    var pixel = image.GetPixel(i, j);
+//
+//                    if (pixel.GetBrightness() == 0.0)
+//                    {
+//                        return ZhukStart(image, new Point(i, j));
+//                    }
+//                }
+//            }
+
             for (int i = shift; i < image.Width; i++)
             {
                 for (int j = 0; j < image.Height; j++)
