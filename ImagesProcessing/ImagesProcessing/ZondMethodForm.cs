@@ -93,7 +93,7 @@ namespace ImagesProcessing
         {
             if (image != null)
             {
-                image = ImageHelper.ScaleImage(ImageHelper.CutImage(image));
+                image = ImageHelper.CutImage(image);
                 imagePictureBox.Image = image;
             }
         }
