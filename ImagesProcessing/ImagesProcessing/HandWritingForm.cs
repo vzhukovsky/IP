@@ -22,5 +22,9 @@ namespace ImagesProcessing
                 pictureBox.Image = image;
             }
         }
+
+        private void analyzeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+        }
     }
 }
