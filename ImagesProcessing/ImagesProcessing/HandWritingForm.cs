@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using ImageProcessingBLL;
+using ImageProcessingBLL.BinaryImages.HandWriting;
 
 namespace ImagesProcessing
 {
@@ -19,12 +19,13 @@ namespace ImagesProcessing
             {
                 var image = new Bitmap(openFileDialog.FileName);
                 handWritingResolver = new HandWritingResolver(image);
-                pictureBox.Image = image;
+                pictureBox.Image = handWritingResolver.sourceImage;
             }
         }
 
         private void analyzeToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            pictureBox.Image = handWritingResolver.GetLine(3).Image;
         }
     }
 }

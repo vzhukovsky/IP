@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace ImageProcessingBLL.BinaryImages
 {
-    class ImageHelper
+    public class ImageHelper
     {
-        public static bool IsBlack(int value)
+        public static bool IsBlackPixel(Color pixel)
         {
-            return value == 1;
+            return pixel.GetBrightness() == 0.0;
         }
 
-        public static bool IsWhite(int value)
+        public static bool IsWhitePixel(Color pixel)
         {
-            return value == 0;
+            return pixel.GetBrightness() != 0.0;
         }
 
         public static int GetPixelValue(Color pixel)
