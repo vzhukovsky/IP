@@ -148,9 +148,6 @@ namespace ImageProcessingBLL
             {
                 if (pointsFiltredKeys[i] != pointsFiltredKeys[i + 1] - 1)
                 {
-//                    var pointsRange = points.Where(obj => (obj.Key >= pointsFiltredKeys[i] && obj.Key <= pointsFiltredKeys[i + 1])).ToDictionary(obj => obj.Key, obj => obj.Value);
-//                    var maxValue = pointsRange.Max(obj => obj.Value);
-//                    var maxValueKey = pointsRange.Where(obj => obj.Value == maxValue).Select(obj => obj.Key).First();
                     return new Point(pointsFiltredKeys[i], pointsFiltredKeys[i + 1]);
                 }
             }
@@ -161,28 +158,6 @@ namespace ImageProcessingBLL
 
         public static List<Point> СircuitZhukMethod(Bitmap image, int shiftWidth, Point startPoint)
         {
-//            height = height == 0 ? image.Height : height;
-//
-//            if (shiftWidth == 0 && shiftHeight == 0)
-//            {
-//                var startPoint = GetStartPoint(image);
-//                shiftWidth = startPoint.X;
-//                shiftHeight = startPoint.Y;
-//            }
-
-//            for (int i = shiftWidth; i < shiftHeight + height; i++)
-//            {
-//                for (int j = shiftHeight; j < shiftHeight + height; j++)
-//                {
-//                    var pixel = image.GetPixel(i, j);
-//
-//                    if (pixel.GetBrightness() == 0.0)
-//                    {
-//                        return ZhukStart(image, new Point(i, j));
-//                    }
-//                }
-//            }
-
             int startBlock = startPoint.X - 1;
             var endBlock = startPoint.Y;
 
@@ -201,7 +176,6 @@ namespace ImageProcessingBLL
                 }
             }
             
-
             return null;
         }
     }

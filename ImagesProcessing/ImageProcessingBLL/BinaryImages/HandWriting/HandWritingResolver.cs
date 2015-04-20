@@ -8,25 +8,28 @@ namespace ImageProcessingBLL.BinaryImages.HandWriting
 {
     public class HandWritingResolver
     {
-        public Bitmap sourceImage;
+        private Bitmap originalImage;
+        private Bitmap image;
         private List<Line> lines = new List<Line>();
 
         public HandWritingResolver(Bitmap image)
         {
-            this.sourceImage = image;
+
+            this.image = new Bitmap(image);
+            this.originalImage = new Bitmap(image);
             LinesDeviders();
         }
 
         private void LinesDeviders()
         {
             List<Point> prevContour = null;
-            var points = ImageProcessingBLL.ImageHelper.GetStartPoints(sourceImage);
+            var points = ImageProcessingBLL.ImageHelper.GetStartPoints(image);
             var averageCount = points.Where(obj => obj.Value != 0).Average(obj => obj.Value);
 
             while (true)
             {
                 Line line = new Line();
-                var startPoint = ImageProcessingBLL.ImageHelper.GetStartPoint(sourceImage, points, averageCount);
+                var startPoint = ImageProcessingBLL.ImageHelper.GetStartPoint(image, points, averageCount);
 
                 if (startPoint.X == 0 && startPoint.Y == 0)
                 {
@@ -35,7 +38,7 @@ namespace ImageProcessingBLL.BinaryImages.HandWriting
 
                 do
                 {
-                    prevContour = ImageProcessingBLL.ImageHelper.СircuitZhukMethod(sourceImage,
+                    prevContour = ImageProcessingBLL.ImageHelper.СircuitZhukMethod(image,
                         prevContour == null ? 0 : prevContour.Max(obj => obj.X) + 1, startPoint);
                     if (prevContour != null)
                     {
@@ -44,9 +47,9 @@ namespace ImageProcessingBLL.BinaryImages.HandWriting
                 } while (prevContour != null);
 
                 SetLineImage(line);
-                line.ClearOn(sourceImage); ;
+                line.ClearOn(image); ;
                 lines.Add(line);
-                points = ImageProcessingBLL.ImageHelper.GetStartPoints(sourceImage);
+                points = ImageProcessingBLL.ImageHelper.GetStartPoints(image);
             }
         }
 
@@ -58,12 +61,27 @@ namespace ImageProcessingBLL.BinaryImages.HandWriting
             var rect = new Rectangle(leftBorder.X, leftBorder.Y, rightBorder.X - leftBorder.X,
                 rightBorder.Y - leftBorder.Y);
 
-            line.Image = sourceImage.Clone(rect, PixelFormat.Format24bppRgb);
+            line.Image = image.Clone(rect, PixelFormat.Format24bppRgb);
         }
 
+        public int LinesCount
+        {
+            get
+            {
+                return lines.Count;
+            }
+        }
         public Line GetLine(int index)
         {
             return index < lines.Count ? lines[index] : null;    
+        }
+
+        public Bitmap SourceImage
+        {
+            get
+            {
+                return originalImage;
+            }
         }
     }
 }
