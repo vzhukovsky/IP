@@ -37,6 +37,7 @@ namespace ImagesProcessing
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
@@ -45,7 +46,8 @@ namespace ImagesProcessing
             // 
             this.mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadImageToolStripMenuItem,
-            this.analyzeToolStripMenuItem});
+            this.analyzeToolStripMenuItem,
+            this.toolStripMenuItem1});
             this.mainMenu.Location = new System.Drawing.Point(0, 0);
             this.mainMenu.Name = "mainMenu";
             this.mainMenu.Size = new System.Drawing.Size(578, 24);
@@ -86,6 +88,13 @@ namespace ImagesProcessing
             // 
             this.openFileDialog.FileName = "openFileDialog";
             // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(25, 20);
+            this.toolStripMenuItem1.Text = "1";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
             // HandWritingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -113,5 +122,6 @@ namespace ImagesProcessing
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private ToolStripMenuItem analyzeToolStripMenuItem;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private ToolStripMenuItem toolStripMenuItem1;
     }
 }

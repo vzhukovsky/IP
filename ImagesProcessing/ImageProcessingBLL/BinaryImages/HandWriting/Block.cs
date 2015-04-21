@@ -36,5 +36,21 @@ namespace ImageProcessingBLL.BinaryImages
                 }
             }
         }
+
+        public int Width
+        {
+            get
+            {
+                return block.Max(obj => obj.X) - block.Min(obj => obj.X);
+            }
+        }
+
+        public int Height
+        {
+            get
+            {
+                return block.Max(obj => obj.Y) - block.Min(obj => obj.Y);
+            }
+        }
     }
 }

@@ -49,5 +49,11 @@ namespace ImagesProcessing
                 customizeContextMenu();
             }
         }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var a = handWritingResolver.SampleMeanLineHeight();
+            var b = handWritingResolver.SampleMeanSquareLineHeight();
+        }
     }
 }

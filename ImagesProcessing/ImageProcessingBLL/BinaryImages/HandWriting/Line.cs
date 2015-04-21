@@ -51,6 +51,38 @@ namespace ImageProcessingBLL.BinaryImages.HandWriting
             return new Point(XMax, YMax);
         }
 
+        public int BlocksCount
+        {
+            get
+            {
+                return blocks.Count;
+            }
+        }
+
+        public double AverabeBlocksHeight
+        {
+            get
+            {
+                return blocks.Average(obj => obj.Height);
+            }
+        }
+
+        public double AverabeBlocksWidth
+        {
+            get
+            {
+                return blocks.Average(obj => obj.Width);
+            }
+        }
+
+        public int Height
+        {
+            get
+            {
+                return blocks.Max(obj => obj.Height);
+            }
+        }
+
         public void ClearOn(Bitmap image)
         {
             foreach (var block in blocks)

@@ -83,5 +83,65 @@ namespace ImageProcessingBLL.BinaryImages.HandWriting
                 return originalImage;
             }
         }
+
+        private double SampleMeanSquare(List<int> items, double average)
+        {
+            return Math.Sqrt(items.Sum(obj => Math.Pow(obj - average, 2)) / items.Count);
+        }
+
+        private double SampleMeanSquare(List<double> items, double average)
+        {
+            return Math.Sqrt(items.Sum(obj => Math.Pow(obj - average, 2)) / items.Count);
+        }
+
+        // signs
+
+        //4
+        public double SampleMeanLineHeight()
+        {
+            return lines.Average(obj => obj.Height);
+        }
+
+        //5
+        public double SampleMeanSquareLineHeight()
+        {
+            var average = lines.Average(obj => obj.Height);
+            var values = lines.Select(obj => obj.Height).ToList();
+
+            return SampleMeanSquare(values, average);
+        }
+
+
+        //8
+        public double SampleMeanBlocksWidth()
+        {
+            return lines.Average(obj => obj.AverabeBlocksWidth);
+        }
+
+        //9
+        public double SampleMeanSquareBlocksWidth()
+        {
+            var average = lines.Average(obj => obj.AverabeBlocksWidth);
+            var values = lines.Select(obj => obj.AverabeBlocksWidth).ToList();
+
+            return SampleMeanSquare(values, average);
+        }
+
+
+
+        //16
+        public double SampleMeanCountBlocks()
+        {
+            return lines.Average(obj => obj.BlocksCount);
+        }
+
+        //17
+        public double SampleMeanSquareCountBlocks()
+        {
+            var average = lines.Average(obj => obj.BlocksCount);
+            var values = lines.Select(obj => obj.BlocksCount).ToList();
+
+            return SampleMeanSquare(values, average);
+        }
     }
 }
