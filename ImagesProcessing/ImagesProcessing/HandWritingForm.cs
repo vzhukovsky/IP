@@ -52,8 +52,7 @@ namespace ImagesProcessing
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            var a = handWritingResolver.SampleMeanLineHeight();
-            var b = handWritingResolver.SampleMeanSquareLineHeight();
+            var a = handWritingResolver.SampleMeanSquareLineSpacing();
         }
     }
 }

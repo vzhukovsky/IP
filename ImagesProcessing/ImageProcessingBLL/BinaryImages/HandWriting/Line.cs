@@ -90,5 +90,25 @@ namespace ImageProcessingBLL.BinaryImages.HandWriting
                 block.ClearOn(image);
             }
         }
+
+        public double BottomMargin()
+        {
+            if (Image != null)
+            {
+                return ImageHelper.GetAvarageBottomMargin(Image);
+            }
+
+            throw new NotImplementedException();
+        }
+
+        public double TopMargin()
+        {
+            if (Image != null)
+            {
+                return ImageHelper.GetAvarageTopMargin(Image);
+            }
+
+            throw new NotImplementedException();
+        }
     }
 }

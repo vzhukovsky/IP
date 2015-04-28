@@ -111,6 +111,35 @@ namespace ImageProcessingBLL.BinaryImages.HandWriting
             return SampleMeanSquare(values, average);
         }
 
+        public List<double> GetLinesSpacing()
+        {
+            var linesSpacing = new List<double>();
+
+            for (int i = 0; i < lines.Count - 1; i++)
+            {
+                var bottom = lines[i].BottomMargin();
+                var top = lines[i + 1].TopMargin();
+
+                linesSpacing.Add(bottom + top);
+            }
+
+            return linesSpacing;
+        } 
+
+        //6
+        public double SampleMeanLineSpacing()
+        {
+            return GetLinesSpacing().Average();
+        }
+
+        //7
+        public double SampleMeanSquareLineSpacing()
+        {
+            var linesSpacing = GetLinesSpacing();
+            var linesSpacingAverage = linesSpacing.Average();
+
+            return SampleMeanSquare(linesSpacing, linesSpacingAverage);
+        }
 
         //8
         public double SampleMeanBlocksWidth()

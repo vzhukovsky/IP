@@ -1,4 +1,7 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Linq;
 
 namespace ImageProcessingBLL.BinaryImages
 {
@@ -32,6 +35,57 @@ namespace ImageProcessingBLL.BinaryImages
             }
 
             return values;
+        }
+
+        public static double GetAvarageBottomMargin(Bitmap image)
+        {
+            if (image == null)
+            {
+                throw new InvalidEnumArgumentException();
+            }
+
+            var margins = new List<int>();
+
+            for (int i = 0; i < image.Width; i++)
+            {
+                for (int j = image.Height - 1; j > 0 ; j--)
+                {
+                    var pixel = image.GetPixel(i, j);
+                    if (pixel.GetBrightness() == 0.0)
+                    {
+                        margins.Add(image.Height - j);
+                        break;
+                    }
+                }
+            }
+
+            return margins.Average();
+        }
+
+
+        public static double GetAvarageTopMargin(Bitmap image)
+        {
+            if (image == null)
+            {
+                throw new InvalidEnumArgumentException();
+            }
+
+            var margins = new List<int>();
+
+            for (int i = 0; i < image.Width; i++)
+            {
+                for (int j = 0; j < image.Height; j++)
+                {
+                    var pixel = image.GetPixel(i, j);
+                    if (pixel.GetBrightness() == 0.0)
+                    {
+                        margins.Add(j);
+                        break;
+                    }
+                }
+            }
+
+            return margins.Average();
         }
     }
 }
