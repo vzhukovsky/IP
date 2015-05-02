@@ -27,7 +27,7 @@ namespace ImagesProcessing
             var handWriginaForm = new HandWritingForm();
             handWriginaForm.Show();           
         }
-
+        
         private void button4_Click(object sender, EventArgs e)
         {
             var recognitionForm = new RecognitionForm();
