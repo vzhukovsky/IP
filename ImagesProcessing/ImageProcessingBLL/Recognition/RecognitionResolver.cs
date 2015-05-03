@@ -46,21 +46,23 @@ namespace ImageProcessingBLL.Recognition
 
         private void InitColumn(DataTable dataTable)
         {
-            dataTable.Columns.Add(new DataColumn("Number", typeof(int)));
             dataTable.Columns.Add(new DataColumn("Class", typeof(int)));
-//            for (int i = 1; i <= 400; i++)
-//            {
-//                var column = new DataColumn(i.ToString(), typeof(int));
-//                dataTable.Columns.Add(column);
-//            }
+            for (int i = 1; i <= 400; i++)
+            {
+                var column = new DataColumn(i.ToString(), typeof(int));
+                dataTable.Columns.Add(column);
+            }
         }
 
         private void FillImagesClass(DataTable dataTable, int imagesClass, List<Bitmap> images)
         {
-            List<Object> list = new List<object>();
-            list.Add(1);
-            list.Add(2);
-            dataTable.Rows.Add(list.ToArray());
+            foreach (var image in images)
+            {
+                List<Object> list = new List<object>();
+                list.Add(imagesClass);
+                list.AddRange(ImageHelper.GetLinearIntensivityList(image));
+                dataTable.Rows.Add(list.ToArray());
+            }            
         }
 
         public DataTable GetDataSource()

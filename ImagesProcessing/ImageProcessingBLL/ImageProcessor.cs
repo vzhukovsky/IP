@@ -98,5 +98,24 @@ namespace ImageProcessingBLL
             }
         }
 
+        public static int GetPixelIntensivity(Color pixel)
+        {
+            return Convert.ToInt32((pixel.R + pixel.B + pixel.G)/3);
+        }
+        public static List<Object> GetLinearIntensivityList(Bitmap image)
+        {
+            List<Object> intensivities = new List<Object>();
+
+            for (int i = 0; i < image.Width; i++)
+            {
+                for (int j = 0; j < image.Height; j++)
+                {
+                    var pixel = image.GetPixel(i, j);
+                    intensivities.Add(GetPixelIntensivity(pixel));
+                }   
+            }
+
+            return intensivities;
+        } 
     };
 }
