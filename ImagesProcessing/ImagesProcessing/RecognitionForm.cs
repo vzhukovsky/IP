@@ -14,7 +14,7 @@ namespace ImagesProcessing
         public RecognitionForm()
         {
             InitializeComponent();
-            recognitionResolver = new RecognitionResolver(5, Directory.GetCurrentDirectory() + @"\Recognition\");
+             recognitionResolver = new RecognitionResolver(5, Directory.GetCurrentDirectory() + @"\Recognition\", new RecognitionByIntensity());
         }
 
         private void RecognitionForm_Load(object sender, EventArgs e)

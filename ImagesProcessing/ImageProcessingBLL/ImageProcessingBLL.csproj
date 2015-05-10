@@ -50,6 +50,10 @@
     <Compile Include="Contour.cs" />
     <Compile Include="ImageProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Recognition\DistanceByClass.cs" />
+    <Compile Include="Recognition\IRecognizable.cs" />
+    <Compile Include="Recognition\RecognitionByA8.cs" />
+    <Compile Include="Recognition\RecognitionByIntensity.cs" />
     <Compile Include="Recognition\RecognitionResolver.cs" />
     <Compile Include="Zond\Zond.cs" />
     <Compile Include="Zond\ZondProcessor.cs" />

@@ -13,14 +13,15 @@ namespace ImageProcessingBLL.Recognition
     {
         private readonly int classesCount;
         private readonly string directoryPath;
-        private List<Bitmap> imagesByClass;
+        private List<Bitmap> imagesByClass = new List<Bitmap>();
         private DataTable dataTable;
+        private IRecognizable recognitionEngine;
 
-        public RecognitionResolver(int classesCount, string directoryPath)
+        public RecognitionResolver(int classesCount, string directoryPath, IRecognizable recognitionEngine)
         {
             this.classesCount = classesCount;
             this.directoryPath = directoryPath;
-            imagesByClass = new List<Bitmap>();
+            this.recognitionEngine = recognitionEngine;
 
             LoadImages();
             InitDataTable();
@@ -81,7 +82,7 @@ namespace ImageProcessingBLL.Recognition
             List<Object> list = new List<object>();
             list.Add(dataTable.Rows.Count + 1);
             list.Add(ParseImageClass(image));
-            list.AddRange(ImageHelper.GetLinearIntensivityList(image));
+            list.AddRange(recognitionEngine.GetLinearMetrics(image));
             dataTable.Rows.Add(list.ToArray());
         }
 
@@ -90,14 +91,26 @@ namespace ImageProcessingBLL.Recognition
             return dataTable;
         }
 
-        public void Recognition(Bitmap imageForRecognition)
+
+
+        public int Recognition(Bitmap imageForRecognition)
         {
-            var imageForRecognitionIntensivity = ImageHelper.GetLinearIntensivityList(imageForRecognition);
+            List<DistanceByClass> distances = new List<DistanceByClass>();
+            var imageForRecognitionIntensivity = recognitionEngine.GetLinearMetrics(imageForRecognition);
 
             for (int i = 0; i < imagesByClass.Count; i++)
             {
-                dataTable.Rows[i]["Euclid"] = ImageHelper.EuclidDistance(imagesByClass[i], imageForRecognition);
+                var distance = recognitionEngine.GetDistance(imagesByClass[i], imageForRecognition);
+                distances.Add(new DistanceByClass()
+                {
+                    Distance = distance,
+                    ImageClass = Convert.ToInt32(imagesByClass[i].Tag)
+                });
+                dataTable.Rows[i]["Euclid"] = distance;
             }
+
+            return recognitionEngine.Recognition(distances);
+
         }
     }
 }
