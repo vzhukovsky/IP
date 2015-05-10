@@ -116,6 +116,22 @@ namespace ImageProcessingBLL
             }
 
             return intensivities;
-        } 
+        }
+
+
+        public static double EuclidDistance(Bitmap first, Bitmap second)
+        {
+            var firstIntensities = GetLinearIntensivityList(first);
+            var secondIntensities = GetLinearIntensivityList(second);
+            double sum = 0;
+
+            for (int i = 0; i < firstIntensities.Count; i++)
+            {
+                sum += Math.Pow(Convert.ToInt32(firstIntensities[i]) - Convert.ToInt32(secondIntensities[i]), 2);
+            }
+
+            return Math.Sqrt(sum);
+
+        }
     };
 }
