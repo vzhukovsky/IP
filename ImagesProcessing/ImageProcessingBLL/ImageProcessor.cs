@@ -98,6 +98,19 @@ namespace ImageProcessingBLL
             }
         }
 
+        public static double[,] GetPixelValueMatrix(Bitmap image)
+        {
+            var arr = new double[image.Width, image.Height];
+            for (int j = 0; j < image.Height; j++)
+            {
+                for (int i = 0; i < image.Width; i++)
+                {
+                    arr[i, j] = (image.GetPixel(i, j).R + image.GetPixel(i, j).G + image.GetPixel(i, j).B) / 3;
+                }
+            }
+            return arr;
+        }
+
         public static int GetPixelIntensivity(Color pixel)
         {
             return Convert.ToInt32((pixel.R + pixel.B + pixel.G)/3);
@@ -113,6 +126,34 @@ namespace ImageProcessingBLL
                     var pixel = image.GetPixel(i, j);
                     intensivities.Add(GetPixelIntensivity(pixel));
                 }   
+            }
+
+            return intensivities;
+        }
+
+
+        public static List<Object> GetLinearA8List(Bitmap image)
+        {
+            List<Object> intensivities = new List<Object>();
+            var valueMatrix = GetPixelValueMatrix(image);
+            int[] Dx = { 1, 1, 0, -1, -1, -1, 0, 1 };
+            int[] Dy = { 0, -1, -1, -1, 0, 1, 1, 1 };
+
+            for (int i = 0; i < image.Width; i++)
+            {
+                for (int j = 0; j < image.Height; j++)
+                {
+                    double sum = 0;
+                    for (int k = 0; k < 8; k++)
+                    {
+                        if (i + Dx[k] > -1 && i + Dx[k] < image.Width && j + Dy[k] > -1 && j + Dy[k] < image.Height)
+                        {
+                            sum += valueMatrix[i + Dx[k], j + Dy[k]];
+                        }
+                    }
+
+                    intensivities.Add(sum);
+                }
             }
 
             return intensivities;
