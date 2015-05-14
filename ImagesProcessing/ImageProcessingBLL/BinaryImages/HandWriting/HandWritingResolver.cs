@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
+using ImageProcessingBLL.Interfaces;
 
 namespace ImageProcessingBLL.BinaryImages.HandWriting
 {
-    public class HandWritingResolver
+    public class HandWritingResolver: IRow
     {
         private Bitmap originalImage;
         private Bitmap image;
@@ -53,7 +54,6 @@ namespace ImageProcessingBLL.BinaryImages.HandWriting
             }
         }
 
-
         private void SetLineImage(Line line)
         {
             var leftBorder = line.LeftBorder();
@@ -94,7 +94,22 @@ namespace ImageProcessingBLL.BinaryImages.HandWriting
             return Math.Sqrt(items.Sum(obj => Math.Pow(obj - average, 2)) / items.Count);
         }
 
-        // signs
+        #region Signs
+
+        //2
+        public double SampleMeanFillingFactor()
+        {
+            return lines.Average(obj => obj.FillingFactor());
+        }
+
+        //3
+        public double SampleMeanSquareFillingFactor()
+        {
+            var average = SampleMeanFillingFactor();
+            var values = lines.Select(obj => obj.FillingFactor()).ToList();
+
+            return SampleMeanSquare(values, average);
+        }
 
         //4
         public double SampleMeanLineHeight()
@@ -156,8 +171,6 @@ namespace ImageProcessingBLL.BinaryImages.HandWriting
             return SampleMeanSquare(values, average);
         }
 
-
-
         //16
         public double SampleMeanCountBlocks()
         {
@@ -171,6 +184,43 @@ namespace ImageProcessingBLL.BinaryImages.HandWriting
             var values = lines.Select(obj => obj.BlocksCount).ToList();
 
             return SampleMeanSquare(values, average);
+        }
+
+        // 48
+        public double SampleMeanLineItemSize()
+        {
+            return lines.Average(obj => obj.GetLineItemAverageSize());
+        }
+
+        // 49
+        public double SampleMeanSquareLineItemSize()
+        {
+            var average = SampleMeanLineItemSize();
+            var values = lines.Select(obj => obj.GetLineItemAverageSize()).ToList();
+            return SampleMeanSquare(values, average);
+        }
+
+        
+        #endregion
+
+        public List<object> GetRow()
+        {
+            var items = new List<object>();
+
+            items.Add(SampleMeanFillingFactor());
+            items.Add(SampleMeanSquareFillingFactor());
+            items.Add(SampleMeanLineHeight());
+            items.Add(SampleMeanSquareLineHeight());
+            items.Add(SampleMeanLineSpacing());
+            items.Add(SampleMeanSquareLineSpacing());
+            items.Add(SampleMeanBlocksWidth());
+            items.Add(SampleMeanSquareBlocksWidth());
+            items.Add(SampleMeanCountBlocks());
+            items.Add(SampleMeanSquareCountBlocks());
+            items.Add(SampleMeanLineItemSize());
+            items.Add(SampleMeanSquareLineItemSize());
+
+            return items;
         }
     }
 }

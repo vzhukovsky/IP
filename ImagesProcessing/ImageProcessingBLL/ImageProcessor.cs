@@ -143,16 +143,20 @@ namespace ImageProcessingBLL
             {
                 for (int j = 0; j < image.Height; j++)
                 {
-                    double sum = 0;
+                    int count = 0;
                     for (int k = 0; k < 8; k++)
                     {
                         if (i + Dx[k] > -1 && i + Dx[k] < image.Width && j + Dy[k] > -1 && j + Dy[k] < image.Height)
                         {
-                            sum += valueMatrix[i + Dx[k], j + Dy[k]];
+                            if (Convert.ToInt32(valueMatrix[i + Dx[k], j + Dy[k]]) != 255)
+                            {
+                                count++;
+                            }
+
                         }
                     }
 
-                    intensivities.Add(sum);
+                    intensivities.Add(count);
                 }
             }
 

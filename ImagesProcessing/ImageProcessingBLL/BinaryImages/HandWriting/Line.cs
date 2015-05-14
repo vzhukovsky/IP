@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -109,6 +110,24 @@ namespace ImageProcessingBLL.BinaryImages.HandWriting
             }
 
             throw new NotImplementedException();
+        }
+
+        public double FillingFactor()
+        {
+            if (Image != null)
+            {
+                var subBlocksWidth = blocks.Sum(obj => obj.Width);
+
+                return subBlocksWidth / Image.Width;
+            }
+            
+            throw new InvalidOperationException();
+        }
+
+        public double GetLineItemAverageSize()
+        {
+            var averageHeight = blocks.Average(obj => obj.Height);
+            return blocks.Where(obj => obj.Height < averageHeight).Average(obj => obj.Height);
         }
     }
 }
