@@ -118,7 +118,7 @@ namespace ImageProcessingBLL.BinaryImages.HandWriting
             {
                 var subBlocksWidth = blocks.Sum(obj => obj.Width);
 
-                return subBlocksWidth / Image.Width;
+                return subBlocksWidth / Convert.ToDouble(Image.Width);
             }
             
             throw new InvalidOperationException();

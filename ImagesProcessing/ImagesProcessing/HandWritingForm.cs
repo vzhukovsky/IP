@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ImageProcessingBLL.BinaryImages.HandWriting;
@@ -7,10 +8,30 @@ namespace ImagesProcessing
 {
     public partial class HandWritingForm : Form
     {
-        private HandWritingResolver handWritingResolver;
+        private List<HandWritingResolver> handWritingResolvers = new List<HandWritingResolver>();
+        private HandWritingResolver selectedHandWritingResolver;
         public HandWritingForm()
         {
             InitializeComponent();
+        }
+
+        private void customizeImagesMenu()
+        {
+            imagesToolStripMenuItem.DropDownItems.Clear();
+
+            for (int i = 1; i <= handWritingResolvers.Count; i++)
+            {
+                var menuItem = imagesToolStripMenuItem.DropDownItems.Add(i.ToString());
+                menuItem.Tag = i - 1;
+                menuItem.Click += selectImage;
+            }
+            customizeContextMenu();
+        }
+
+        private void selectLine(object sender, EventArgs e)
+        {
+            int lineIndex = Convert.ToInt32((sender as ToolStripMenuItem).Tag);
+            pictureBox.Image = selectedHandWritingResolver.GetLine(lineIndex).Image;
         }
 
         private void customizeContextMenu()
@@ -19,7 +40,7 @@ namespace ImagesProcessing
 
             analyzeToolStripMenuItem.DropDownItems.Add("Source image").Click += showSourceImage;
 
-            for (int i = 1; i <= handWritingResolver.LinesCount; i++)
+            for (int i = 1; i <= selectedHandWritingResolver.LinesCount; i++)
             {
                 var menuItem = analyzeToolStripMenuItem.DropDownItems.Add(i.ToString());
                 menuItem.Tag = i - 1;
@@ -27,15 +48,17 @@ namespace ImagesProcessing
             }            
         }
 
-        private void showSourceImage(object sender, EventArgs e)
+        private void selectImage(object sender, EventArgs e)
         {
-            pictureBox.Image = handWritingResolver.SourceImage;
+            int imageIndex = Convert.ToInt32((sender as ToolStripMenuItem).Tag);
+            selectedHandWritingResolver = handWritingResolvers[imageIndex];
+            pictureBox.Image = selectedHandWritingResolver.SourceImage;
+            customizeContextMenu();
         }
 
-        private void selectLine(object sender, EventArgs e)
+        private void showSourceImage(object sender, EventArgs e)
         {
-            int lineIndex = Convert.ToInt32((sender as ToolStripMenuItem).Tag);
-            pictureBox.Image = handWritingResolver.GetLine(lineIndex).Image;
+            pictureBox.Image = selectedHandWritingResolver.SourceImage;
         }
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
@@ -43,16 +66,12 @@ namespace ImagesProcessing
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 var image = new Bitmap(openFileDialog.FileName);
-                handWritingResolver = new HandWritingResolver(image);
-                pictureBox.Image = handWritingResolver.SourceImage;
-
-                customizeContextMenu();
+                selectedHandWritingResolver = new HandWritingResolver(image);
+                pictureBox.Image = selectedHandWritingResolver.SourceImage;
+                dataGridView1.Rows.Add(selectedHandWritingResolver.GetRow().ToArray());
+                handWritingResolvers.Add(selectedHandWritingResolver);
+                customizeImagesMenu();
             }
-        }
-
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            var a = handWritingResolver.SampleMeanSquareLineSpacing();
         }
     }
 }
