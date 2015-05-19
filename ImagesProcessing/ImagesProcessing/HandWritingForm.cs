@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using ImageProcessingBLL.BinaryImages.HandWriting;
+using ImageProcessingBLL.CutPlace;
 
 namespace ImagesProcessing
 {
@@ -72,6 +74,11 @@ namespace ImagesProcessing
                 handWritingResolvers.Add(selectedHandWritingResolver);
                 customizeImagesMenu();
             }
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var a = new CutPlaceResolver(handWritingResolvers.Select(obj => obj.GetRow()).ToArray());
         }
     }
 }

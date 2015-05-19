@@ -33,6 +33,7 @@ namespace ImagesProcessing
             this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.loadImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.imagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.analyzeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -50,7 +51,7 @@ namespace ImagesProcessing
             this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.imagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -61,7 +62,8 @@ namespace ImagesProcessing
             this.mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadImageToolStripMenuItem,
             this.imagesToolStripMenuItem,
-            this.analyzeToolStripMenuItem});
+            this.analyzeToolStripMenuItem,
+            this.toolStripMenuItem1});
             this.mainMenu.Location = new System.Drawing.Point(0, 0);
             this.mainMenu.Name = "mainMenu";
             this.mainMenu.Size = new System.Drawing.Size(985, 24);
@@ -79,9 +81,15 @@ namespace ImagesProcessing
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.loadToolStripMenuItem.Text = "Load";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
+            // 
+            // imagesToolStripMenuItem
+            // 
+            this.imagesToolStripMenuItem.Name = "imagesToolStripMenuItem";
+            this.imagesToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.imagesToolStripMenuItem.Text = "Images";
             // 
             // analyzeToolStripMenuItem
             // 
@@ -183,11 +191,12 @@ namespace ImagesProcessing
             this.Column12.HeaderText = "ВСКО размера блоков, обр строчными элементами";
             this.Column12.Name = "Column12";
             // 
-            // imagesToolStripMenuItem
+            // toolStripMenuItem1
             // 
-            this.imagesToolStripMenuItem.Name = "imagesToolStripMenuItem";
-            this.imagesToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
-            this.imagesToolStripMenuItem.Text = "Images";
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(25, 20);
+            this.toolStripMenuItem1.Text = "1";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // HandWritingForm
             // 
@@ -232,5 +241,6 @@ namespace ImagesProcessing
         private DataGridViewTextBoxColumn Column11;
         private DataGridViewTextBoxColumn Column12;
         private ToolStripMenuItem imagesToolStripMenuItem;
+        private ToolStripMenuItem toolStripMenuItem1;
     }
 }

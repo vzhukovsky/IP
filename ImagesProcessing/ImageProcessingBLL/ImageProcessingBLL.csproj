@@ -48,6 +48,7 @@
     <Compile Include="BinaryImages\HandWriting\HandWritingResolver.cs" />
     <Compile Include="BinaryImages\HandWriting\Line.cs" />
     <Compile Include="Contour.cs" />
+    <Compile Include="CutPlace\CutPlaceResolver.cs" />
     <Compile Include="ImageProcessor.cs" />
     <Compile Include="Interfaces\IRow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
