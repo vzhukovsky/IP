@@ -35,6 +35,7 @@ namespace ImagesProcessing
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.analyzeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
@@ -51,10 +52,19 @@ namespace ImagesProcessing
             this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.lambdaDataGridView = new System.Windows.Forms.DataGridView();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.signTableDataGridView = new System.Windows.Forms.DataGridView();
             this.mainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lambdaDataGridView)).BeginInit();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.signTableDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -66,7 +76,7 @@ namespace ImagesProcessing
             this.toolStripMenuItem1});
             this.mainMenu.Location = new System.Drawing.Point(0, 0);
             this.mainMenu.Name = "mainMenu";
-            this.mainMenu.Size = new System.Drawing.Size(985, 24);
+            this.mainMenu.Size = new System.Drawing.Size(1109, 24);
             this.mainMenu.TabIndex = 0;
             this.mainMenu.Text = "menuStrip1";
             // 
@@ -96,6 +106,13 @@ namespace ImagesProcessing
             this.analyzeToolStripMenuItem.Name = "analyzeToolStripMenuItem";
             this.analyzeToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.analyzeToolStripMenuItem.Text = "Analyze";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(25, 20);
+            this.toolStripMenuItem1.Text = "1";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // pictureBox
             // 
@@ -128,7 +145,7 @@ namespace ImagesProcessing
             this.Column12});
             this.dataGridView1.Location = new System.Drawing.Point(12, 256);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(961, 209);
+            this.dataGridView1.Size = new System.Drawing.Size(1081, 209);
             this.dataGridView1.TabIndex = 2;
             // 
             // Column1
@@ -191,18 +208,60 @@ namespace ImagesProcessing
             this.Column12.HeaderText = "ВСКО размера блоков, обр строчными элементами";
             this.Column12.Name = "Column12";
             // 
-            // toolStripMenuItem1
+            // tabControl1
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(25, 20);
-            this.toolStripMenuItem1.Text = "1";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(12, 471);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(1085, 330);
+            this.tabControl1.TabIndex = 3;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.lambdaDataGridView);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1077, 304);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Lambda table";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // lambdaDataGridView
+            // 
+            this.lambdaDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.lambdaDataGridView.Location = new System.Drawing.Point(6, 15);
+            this.lambdaDataGridView.Name = "lambdaDataGridView";
+            this.lambdaDataGridView.Size = new System.Drawing.Size(1065, 189);
+            this.lambdaDataGridView.TabIndex = 0;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.signTableDataGridView);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1077, 304);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Sign table";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // signTableDataGridView
+            // 
+            this.signTableDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.signTableDataGridView.Location = new System.Drawing.Point(16, 6);
+            this.signTableDataGridView.Name = "signTableDataGridView";
+            this.signTableDataGridView.Size = new System.Drawing.Size(966, 232);
+            this.signTableDataGridView.TabIndex = 0;
             // 
             // HandWritingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(985, 477);
+            this.ClientSize = new System.Drawing.Size(1109, 743);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.pictureBox);
             this.Controls.Add(this.mainMenu);
@@ -213,6 +272,11 @@ namespace ImagesProcessing
             this.mainMenu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.lambdaDataGridView)).EndInit();
+            this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.signTableDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -242,5 +306,10 @@ namespace ImagesProcessing
         private DataGridViewTextBoxColumn Column12;
         private ToolStripMenuItem imagesToolStripMenuItem;
         private ToolStripMenuItem toolStripMenuItem1;
+        private TabControl tabControl1;
+        private TabPage tabPage1;
+        private DataGridView lambdaDataGridView;
+        private TabPage tabPage2;
+        private DataGridView signTableDataGridView;
     }
 }

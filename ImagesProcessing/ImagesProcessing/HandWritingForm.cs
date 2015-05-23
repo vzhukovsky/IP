@@ -79,6 +79,8 @@ namespace ImagesProcessing
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
             var a = new CutPlaceResolver(handWritingResolvers.Select(obj => obj.GetRow()).ToArray());
+            lambdaDataGridView.DataSource = a.GetLambdaTable();
+            signTableDataGridView.DataSource = a.GetSignsTable();
         }
     }
 }

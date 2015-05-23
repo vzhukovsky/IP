@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 
 namespace ImageProcessingBLL.CutPlace
@@ -13,7 +14,8 @@ namespace ImageProcessingBLL.CutPlace
 
         private List<object>[] lambda;
         private List<object>[] r;
-        private List<object> rAverage; 
+        private List<object> rAverage;
+        private List<object>[] signsTable;
 
 
         public CutPlaceResolver(params List<object>[] signs)
@@ -29,6 +31,7 @@ namespace ImageProcessingBLL.CutPlace
             lambda = GenerateLambda();
             r = GenerateR();
             rAverage = GenerateRaverage();
+            signsTable = GenerateSignsTable();
         }
 
         private bool IsValidSigns(List<object>[] signs)
@@ -112,6 +115,82 @@ namespace ImageProcessingBLL.CutPlace
             }
 
             return rAverage;
-        } 
+        }
+
+        private List<object>[] GenerateSignsTable()
+        {
+            var signsTable = new List<object>[signs.Length];
+
+            for (int i = 0; i < signsTable.Length; i++)
+            {
+                signsTable[i] = new List<object>();
+
+                for (int j = 0; j < r[i].Count; j++)
+                {
+                    if (Convert.ToDouble(r[i][j]) - Convert.ToDouble(rAverage[i]) < 0.0)
+                    {
+                        signsTable[i].Add(0);
+                    }
+                    else
+                    {
+                        signsTable[i].Add(1);
+                    }
+                }
+            }
+
+            return signsTable;
+        }
+
+        private void InitLambdaTableColumns(DataTable dataTable)
+        {
+            for (int i = 0; i < size; i++)
+            {
+                dataTable.Columns.Add("L" + (i + 1));
+            }
+
+            dataTable.Columns.Add("L n + 1");
+
+            for (int i = 0; i < lambda.Length; i++)
+            {
+                dataTable.Columns.Add("R" + (i + 1));
+            }
+        }
+        public DataTable GetLambdaTable()
+        {
+            DataTable data = new DataTable();
+            InitLambdaTableColumns(data);
+
+            for (int i = 0; i < lambda.Length; i++)
+            {
+                var items = new List<object>();
+                items.AddRange(lambda[i]);
+                items.Add(rAverage[i]);
+                items.AddRange(r[i]);
+                data.Rows.Add(items.ToArray());
+            }
+
+            return data;
+        }
+
+        private void InitSignsTableColumns(DataTable dataTable)
+        {
+            for (int i = 0; i < lambda.Length; i++)
+            {
+                dataTable.Columns.Add((i + 1).ToString());
+            }
+        }
+
+        public DataTable GetSignsTable()
+        {
+            DataTable data = new DataTable();
+            InitSignsTableColumns(data);
+
+            for (int i = 0; i < signsTable.Length; i++)
+            {
+                data.Rows.Add(signsTable[i].ToArray());
+            }
+
+            return data;
+        }
     }
 }
