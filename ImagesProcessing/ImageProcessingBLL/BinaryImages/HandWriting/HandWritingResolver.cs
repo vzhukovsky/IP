@@ -130,12 +130,19 @@ namespace ImageProcessingBLL.BinaryImages.HandWriting
         {
             var linesSpacing = new List<double>();
 
-            for (int i = 0; i < lines.Count - 1; i++)
+            if (lines.Count > 1)
             {
-                var bottom = lines[i].BottomMargin();
-                var top = lines[i + 1].TopMargin();
+                for (int i = 0; i < lines.Count - 1; i++)
+                {
+                    var bottom = lines[i].BottomMargin();
+                    var top = lines[i + 1].TopMargin();
 
-                linesSpacing.Add(bottom + top);
+                    linesSpacing.Add(bottom + top);
+                }
+            }
+            else
+            {
+                linesSpacing.Add(0);
             }
 
             return linesSpacing;
