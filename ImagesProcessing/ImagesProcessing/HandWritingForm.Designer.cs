@@ -35,7 +35,9 @@ namespace ImagesProcessing
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.analyzeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.recognitionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadImageToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.buildTablesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
@@ -57,6 +59,14 @@ namespace ImagesProcessing
             this.lambdaDataGridView = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.signTableDataGridView = new System.Windows.Forms.DataGridView();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.reduceDataGridView = new System.Windows.Forms.DataGridView();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.rankDataGridView = new System.Windows.Forms.DataGridView();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.additionTableGridView = new System.Windows.Forms.DataGridView();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.metricsDataGridView = new System.Windows.Forms.DataGridView();
             this.mainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -65,6 +75,14 @@ namespace ImagesProcessing
             ((System.ComponentModel.ISupportInitialize)(this.lambdaDataGridView)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.signTableDataGridView)).BeginInit();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.reduceDataGridView)).BeginInit();
+            this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rankDataGridView)).BeginInit();
+            this.tabPage5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.additionTableGridView)).BeginInit();
+            this.tabPage6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.metricsDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -73,7 +91,7 @@ namespace ImagesProcessing
             this.loadImageToolStripMenuItem,
             this.imagesToolStripMenuItem,
             this.analyzeToolStripMenuItem,
-            this.toolStripMenuItem1});
+            this.recognitionToolStripMenuItem});
             this.mainMenu.Location = new System.Drawing.Point(0, 0);
             this.mainMenu.Name = "mainMenu";
             this.mainMenu.Size = new System.Drawing.Size(1109, 24);
@@ -107,12 +125,28 @@ namespace ImagesProcessing
             this.analyzeToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.analyzeToolStripMenuItem.Text = "Analyze";
             // 
-            // toolStripMenuItem1
+            // recognitionToolStripMenuItem
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(25, 20);
-            this.toolStripMenuItem1.Text = "1";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            this.recognitionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadImageToolStripMenuItem1,
+            this.buildTablesToolStripMenuItem});
+            this.recognitionToolStripMenuItem.Name = "recognitionToolStripMenuItem";
+            this.recognitionToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
+            this.recognitionToolStripMenuItem.Text = "Recognition";
+            // 
+            // loadImageToolStripMenuItem1
+            // 
+            this.loadImageToolStripMenuItem1.Name = "loadImageToolStripMenuItem1";
+            this.loadImageToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.loadImageToolStripMenuItem1.Text = "Load image";
+            this.loadImageToolStripMenuItem1.Click += new System.EventHandler(this.loadImageToolStripMenuItem1_Click);
+            // 
+            // buildTablesToolStripMenuItem
+            // 
+            this.buildTablesToolStripMenuItem.Name = "buildTablesToolStripMenuItem";
+            this.buildTablesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.buildTablesToolStripMenuItem.Text = "Build tables";
+            this.buildTablesToolStripMenuItem.Click += new System.EventHandler(this.buildTablesToolStripMenuItem_Click);
             // 
             // pictureBox
             // 
@@ -212,6 +246,10 @@ namespace ImagesProcessing
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
+            this.tabControl1.Controls.Add(this.tabPage5);
+            this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Location = new System.Drawing.Point(12, 471);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -256,6 +294,82 @@ namespace ImagesProcessing
             this.signTableDataGridView.Size = new System.Drawing.Size(966, 232);
             this.signTableDataGridView.TabIndex = 0;
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.reduceDataGridView);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(1077, 304);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Reduce table";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // reduceDataGridView
+            // 
+            this.reduceDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.reduceDataGridView.Location = new System.Drawing.Point(6, 6);
+            this.reduceDataGridView.Name = "reduceDataGridView";
+            this.reduceDataGridView.Size = new System.Drawing.Size(1065, 246);
+            this.reduceDataGridView.TabIndex = 0;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.rankDataGridView);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(1077, 304);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Rank table";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // rankDataGridView
+            // 
+            this.rankDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.rankDataGridView.Location = new System.Drawing.Point(6, 6);
+            this.rankDataGridView.Name = "rankDataGridView";
+            this.rankDataGridView.Size = new System.Drawing.Size(1065, 252);
+            this.rankDataGridView.TabIndex = 0;
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.additionTableGridView);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(1077, 304);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "Addition table";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // additionTableGridView
+            // 
+            this.additionTableGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.additionTableGridView.Location = new System.Drawing.Point(6, 6);
+            this.additionTableGridView.Name = "additionTableGridView";
+            this.additionTableGridView.Size = new System.Drawing.Size(1065, 242);
+            this.additionTableGridView.TabIndex = 0;
+            // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.metricsDataGridView);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(1077, 304);
+            this.tabPage6.TabIndex = 5;
+            this.tabPage6.Text = "Metrics table";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // metricsDataGridView
+            // 
+            this.metricsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.metricsDataGridView.Location = new System.Drawing.Point(6, 15);
+            this.metricsDataGridView.Name = "metricsDataGridView";
+            this.metricsDataGridView.Size = new System.Drawing.Size(1065, 223);
+            this.metricsDataGridView.TabIndex = 0;
+            // 
             // HandWritingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -277,6 +391,14 @@ namespace ImagesProcessing
             ((System.ComponentModel.ISupportInitialize)(this.lambdaDataGridView)).EndInit();
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.signTableDataGridView)).EndInit();
+            this.tabPage3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.reduceDataGridView)).EndInit();
+            this.tabPage4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.rankDataGridView)).EndInit();
+            this.tabPage5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.additionTableGridView)).EndInit();
+            this.tabPage6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.metricsDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -305,11 +427,21 @@ namespace ImagesProcessing
         private DataGridViewTextBoxColumn Column11;
         private DataGridViewTextBoxColumn Column12;
         private ToolStripMenuItem imagesToolStripMenuItem;
-        private ToolStripMenuItem toolStripMenuItem1;
         private TabControl tabControl1;
         private TabPage tabPage1;
         private DataGridView lambdaDataGridView;
         private TabPage tabPage2;
         private DataGridView signTableDataGridView;
+        private TabPage tabPage3;
+        private TabPage tabPage4;
+        private TabPage tabPage5;
+        private TabPage tabPage6;
+        private DataGridView reduceDataGridView;
+        private DataGridView rankDataGridView;
+        private DataGridView additionTableGridView;
+        private DataGridView metricsDataGridView;
+        private ToolStripMenuItem recognitionToolStripMenuItem;
+        private ToolStripMenuItem loadImageToolStripMenuItem1;
+        private ToolStripMenuItem buildTablesToolStripMenuItem;
     }
 }

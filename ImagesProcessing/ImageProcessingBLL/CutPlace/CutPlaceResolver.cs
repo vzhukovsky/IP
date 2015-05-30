@@ -2,195 +2,207 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Forms;
+using SecantMethod.Services;
+using SecantMethod.TableKoeffecientPlockosty;
+using SecantMethod.TablePriznakov;
+using SecantMethod.TableRank;
+using SecantMethod.TableServices;
+using SecantMethod.TableSign;
 
 namespace ImageProcessingBLL.CutPlace
 {
     public class CutPlaceResolver
     {
-        private readonly List<object>[] signs;
-        private readonly Random numberGenerator = new Random();
-        private readonly int size;
+        private ServiceTablePriznakov _tablePriznak;
+        private ServiceTableKoeff _tableKoeff;
+        private List<PriznakTable> _values;
+        private int metricsCount = 6;
 
-        private List<object>[] lambda;
-        private List<object>[] r;
-        private List<object> rAverage;
-        private List<object>[] signsTable;
-
-
-        public CutPlaceResolver(params List<object>[] signs)
+        public CutPlaceResolver(int metricsCount)
         {
-            if (!IsValidSigns(signs))
+            this.metricsCount = metricsCount;
+        }
+
+        private void CreateTablePriznakov(DataGridView dataGridView)
+        {
+            var listPriznakovHeader = new List<string>
             {
-                throw new InvalidEnumArgumentException();
+                "No",
+                "class"
+            };
+
+            for (var i = 0; i < metricsCount; i++)
+            {
+                listPriznakovHeader.Add(string.Format("P{0}", i + 1));
             }
 
-            this.signs = signs;
-            size = signs.FirstOrDefault().Count;
-
-            lambda = GenerateLambda();
-            r = GenerateR();
-            rAverage = GenerateRaverage();
-            signsTable = GenerateSignsTable();
+            _tablePriznak = new ServiceTablePriznakov(metricsCount, listPriznakovHeader, dataGridView);
+            _tablePriznak.BuildGrid();
         }
 
-        private bool IsValidSigns(List<object>[] signs)
+        private void CreateTablePloskostei(DataGridView coeffTable)
         {
-            return signs != null && signs.Length > 0;
-        }
-
-        private bool IsValidLambda(List<object>[] lambda)
-        {
-            return lambda.Length == signs.Length;
-        }
-
-        private List<object> GenerateRandomLamdaList(int size)
-        {
-            var lamda = new List<object>();
-
-            for (int i = 0; i < size; i++)
+            var listKoefficientHeader = new List<string>
             {
-                lamda.Add((double)(numberGenerator.Next(-10, 10)) / 10);
+                "No",
+                "BetweenPoints"
+            };
+
+            for (var i = 0; i < metricsCount; i++)
+            {
+                listKoefficientHeader.Add(string.Format("L{0}", i + 1));
             }
 
-            return lamda;
+            listKoefficientHeader.Add("L+1");
+            listKoefficientHeader.Add("S1");
+            listKoefficientHeader.Add("S2");
+
+
+            _tableKoeff = new ServiceTableKoeff(metricsCount, listKoefficientHeader, coeffTable);
+            _tableKoeff.BuildGrid();
+            _tableKoeff.AddValueTable(ServiceTableSigns.KoeffecientPlockosty);
         }
 
-        private List<object>[] GenerateLambda()
+        private static object DeepClone(object obj)
         {
-            var lamda = new List<object>[signs.Length];
-
-            for (int i = 0; i < lamda.Length; i++)
+            object objResult = null;
+            using (MemoryStream ms = new MemoryStream())
             {
-                lamda[i] = GenerateRandomLamdaList(size);
+                BinaryFormatter bf = new BinaryFormatter();
+                bf.Serialize(ms, obj);
+
+                ms.Position = 0;
+                objResult = bf.Deserialize(ms);
             }
-
-            return lamda;
+            return objResult;
         }
 
-        private List<object>[] GenerateR()
+        private List<PriznakTable> GetNormalizePriznaks(List<PriznakTable> priznakTables)
         {
-            if (IsValidLambda(lambda))
+            var countPriznaks = priznakTables.Select(x => x.Priznaki.Count).First();
+
+            for (int i = 0; i < countPriznaks; i++)
             {
-                var r = new List<object>[lambda.Length];
-                for (int i = 0; i < r.Length; i++)
+                var key = (i + 1).ToString();
+                var max = priznakTables.Max(x => x.Priznaki[key]);
+                var min = priznakTables.Min(x => x.Priznaki[key]);
+
+                for (int j = 0; j < priznakTables.Count; j++)
                 {
-                    r[i] = new List<object>();
-                    
-                    for (int j = 0; j < lambda.Length; j++)
-                    {
-                        r[i].Add(MulLists(lambda[j], signs[i]));
-                    }
-                         
-                }
-                return r;
-            }
-
-            throw new InvalidOperationException();
-        }
-
-        private double MulLists(List<object> first, List<object> second)
-        {
-            if (first.Count == second.Count)
-            {
-                double mul = 1.0;
-
-                for (int i = 0; i < first.Count; i++)
-                {
-                    mul += Convert.ToDouble(first[i]) * Convert.ToDouble(second[i]);
-                }
-                return mul;
-            }
-
-            throw new InvalidOperationException();
-        }
-
-        private List<object> GenerateRaverage()
-        {
-            var rAverage = new List<object>();
-
-            foreach (var item in r)
-            {
-                rAverage.Add(item.Average(obj => Convert.ToDouble(obj)));
-            }
-
-            return rAverage;
-        }
-
-        private List<object>[] GenerateSignsTable()
-        {
-            var signsTable = new List<object>[signs.Length];
-
-            for (int i = 0; i < signsTable.Length; i++)
-            {
-                signsTable[i] = new List<object>();
-
-                for (int j = 0; j < r[i].Count; j++)
-                {
-                    if (Convert.ToDouble(r[i][j]) - Convert.ToDouble(rAverage[i]) < 0.0)
-                    {
-                        signsTable[i].Add(0);
-                    }
-                    else
-                    {
-                        signsTable[i].Add(1);
-                    }
+                    priznakTables[j].Priznaki[key] = (priznakTables[j].Priznaki[key] - min + 0.0) / (max - min);
                 }
             }
 
-            return signsTable;
+            return priznakTables;
         }
 
-        private void InitLambdaTableColumns(DataTable dataTable)
+        public void MethodSek(List<PriznakTable> values, DataGridView coeffTable,
+            DataGridView signTable, DataGridView reduceTable, DataGridView rankTable, DataGridView additionalTable, DataGridView metricsTable 
+            )
         {
-            for (int i = 0; i < size; i++)
+            CreateTablePriznakov(metricsTable);
+            _tablePriznak.AddValueTable(values);
+
+            var deepClone = (List<PriznakTable>)DeepClone(values);
+
+            var normalizePriznaks = GetNormalizePriznaks(deepClone);
+
+            //            values = normalizePriznaks;
+
+            //CreateTablePriznakov(dataGridView1);
+            _tablePriznak.AddValueTable(normalizePriznaks);
+
+            KoeffecientPlockostyTable koeffPloskosty = Ploskosti.GetKoefPloskosty(values, new List<KoeffecientPlockostyTable>());
+
+            List<SignTable> listSignTables = Sings.SetupValues(values, koeffPloskosty);
+            var koeffecientPlockostyTables = new List<KoeffecientPlockostyTable>() { koeffPloskosty };
+
+            var signService = new ServiceTableSigns(signTable, koeffecientPlockostyTables, listSignTables, values);
+
+            //Начинаем с  3 точки добавлять в таблицу знаков 
+            for (var i = 2; i < values.Count; i++)
             {
-                dataTable.Columns.Add("L" + (i + 1));
+                ServiceTableSigns.AddPriznak(values[i]);
             }
 
-            dataTable.Columns.Add("L n + 1");
-
-            for (int i = 0; i < lambda.Length; i++)
+            //find apponets 
+            while (ServiceTableSigns.FindOpponents() != null)
             {
-                dataTable.Columns.Add("R" + (i + 1));
+                ServiceTableSigns.FindApponetsFinal();
             }
+
+            ServiceTableSigns.BuildTable();
+
+            ServiceTableSigns.SokrashSignTable();
+
+            var signServiceSokrash = new ServiceTableSigns(reduceTable, koeffecientPlockostyTables, listSignTables, values);
+            ServiceTableSigns.BuildTable();
+
+
+            CreateTablePloskostei(coeffTable);
+
+
+            var serviceRank = new ServiceTableRank(rankTable, additionalTable, listSignTables, koeffecientPlockostyTables);
+            ServiceTableRank.CreateTable();
+
+            ServiceTableRank.CalculatioRank();
+            ServiceTableRank.DisplayValues();
+
+            //////////////////////////////////
+            ServiceTableRank.DeleteIdenticRow();
+            reduceTable.Rows.Clear();
+            reduceTable.Refresh();
+            ServiceTableSigns.BuildTable();
+            /////////////////////////////////
+
+            ServiceTableSigns.DisplayZnazhRazr();
         }
-        public DataTable GetLambdaTable()
-        {
-            DataTable data = new DataTable();
-            InitLambdaTableColumns(data);
 
-            for (int i = 0; i < lambda.Length; i++)
+        public string Recognition(PriznakTable priznak, DataGridView reduceSignTable)
+        {
+            ServiceTableSigns.AddPointInTableSing(priznak);
+
+
+            SignTable current = ServiceTableSigns.SignTables.Last();
+
+            string q = null;
+            foreach (var a in current.DictionaryPloskostei)
             {
-                var items = new List<object>();
-                items.AddRange(lambda[i]);
-                items.Add(rAverage[i]);
-                items.AddRange(r[i]);
-                data.Rows.Add(items.ToArray());
+                q += a.Value;
             }
 
-            return data;
-        }
+            //label2.Text = q;
 
-        private void InitSignsTableColumns(DataTable dataTable)
-        {
-            for (int i = 0; i < lambda.Length; i++)
+            for (int i = 0; i < reduceSignTable.RowCount - 2; i++)
             {
-                dataTable.Columns.Add((i + 1).ToString());
+                string splitStringOne = null;
+                string splitStringTWo = null;
+
+                for (int j = 2; j < reduceSignTable.ColumnCount; j++)
+                {
+                    Color backColor = reduceSignTable[j, i].Style.BackColor;
+
+                    if (backColor == Color.Green)
+                    {
+                        splitStringOne += reduceSignTable[j, i].Value;
+                        splitStringTWo += current.DictionaryPloskostei[Convert.ToInt32(reduceSignTable.Columns[j].HeaderText)];
+                    }
+                }
+
+                if (splitStringOne == splitStringTWo)
+                {
+                    return ServiceTableSigns.SignTables[i].Class;
+
+                }
             }
-        }
 
-        public DataTable GetSignsTable()
-        {
-            DataTable data = new DataTable();
-            InitSignsTableColumns(data);
-
-            for (int i = 0; i < signsTable.Length; i++)
-            {
-                data.Rows.Add(signsTable[i].ToArray());
-            }
-
-            return data;
+            return "Unrecognizable";
         }
     }
 }

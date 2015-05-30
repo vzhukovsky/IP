@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using ImageProcessingBLL.BinaryImages.HandWriting;
 using ImageProcessingBLL.CutPlace;
+using SecantMethod.TablePriznakov;
 
 namespace ImagesProcessing
 {
@@ -76,11 +77,55 @@ namespace ImagesProcessing
             }
         }
 
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        private void ClearTables()
         {
-            var a = new CutPlaceResolver(handWritingResolvers.Select(obj => obj.GetRow()).ToArray());
-            lambdaDataGridView.DataSource = a.GetLambdaTable();
-            signTableDataGridView.DataSource = a.GetSignsTable();
+            lambdaDataGridView.Rows.Clear();
+            lambdaDataGridView.Refresh();
+
+            signTableDataGridView.Rows.Clear();
+            signTableDataGridView.Refresh();
+
+            reduceDataGridView.Rows.Clear();
+            reduceDataGridView.Refresh();
+
+            rankDataGridView.Rows.Clear();
+            rankDataGridView.Refresh();
+
+            additionTableGridView.Rows.Clear();
+            additionTableGridView.Refresh();
+
+            metricsDataGridView.Rows.Clear();
+            metricsDataGridView.Refresh();
+        }
+
+        private void loadImageToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                Bitmap image = new Bitmap(openFileDialog.FileName);
+                var handWritingResolver = new HandWritingResolver(image);
+                var cutPlaceresolver = new CutPlaceResolver(12);
+
+                MessageBox.Show(cutPlaceresolver.Recognition(handWritingResolver.GetMetrics(), reduceDataGridView));
+            }
+        }
+
+        private void buildTablesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var cutPlaceresolver = new CutPlaceResolver(12);
+            List<PriznakTable> metrics = handWritingResolvers.Select(obj => obj.GetMetrics()).ToList();
+            PriznakTable.OrderMetrics(metrics);
+            ClearTables();
+            cutPlaceresolver.MethodSek(
+                metrics,
+                lambdaDataGridView,
+                signTableDataGridView,
+                reduceDataGridView,
+                rankDataGridView,
+                additionTableGridView,
+                metricsDataGridView);
+
+            tabControl1.SelectTab(tabPage3);
         }
     }
 }

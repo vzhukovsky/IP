@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using ImageProcessingBLL.Interfaces;
+using SecantMethod.TablePriznakov;
 
 namespace ImageProcessingBLL.BinaryImages.HandWriting
 {
@@ -228,6 +229,25 @@ namespace ImageProcessingBLL.BinaryImages.HandWriting
             items.Add(SampleMeanSquareLineItemSize());
 
             return items;
+        }
+
+        public PriznakTable GetMetrics()
+        {
+            PriznakTable metrics = new PriznakTable();
+            metrics.Priznaki = new Dictionary<string, double>();
+            metrics.Priznaki.Add("1", SampleMeanFillingFactor());
+            metrics.Priznaki.Add("2", SampleMeanSquareFillingFactor());
+            metrics.Priznaki.Add("3", SampleMeanLineHeight());
+            metrics.Priznaki.Add("4", SampleMeanSquareLineHeight());
+            metrics.Priznaki.Add("5", SampleMeanLineSpacing());
+            metrics.Priznaki.Add("6", SampleMeanSquareLineSpacing());
+            metrics.Priznaki.Add("7", SampleMeanBlocksWidth());
+            metrics.Priznaki.Add("8", SampleMeanSquareBlocksWidth());
+            metrics.Priznaki.Add("9", SampleMeanCountBlocks());
+            metrics.Priznaki.Add("10", SampleMeanSquareCountBlocks());
+            metrics.Priznaki.Add("11", SampleMeanLineItemSize());
+            metrics.Priznaki.Add("12", SampleMeanSquareLineItemSize());
+            return metrics;
         }
     }
 }
