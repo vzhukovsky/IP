@@ -13,6 +13,8 @@ namespace ImagesProcessing
     {
         private List<HandWritingResolver> handWritingResolvers = new List<HandWritingResolver>();
         private HandWritingResolver selectedHandWritingResolver;
+        private Line selectedLine;
+
         public HandWritingForm()
         {
             InitializeComponent();
@@ -34,7 +36,20 @@ namespace ImagesProcessing
         private void selectLine(object sender, EventArgs e)
         {
             int lineIndex = Convert.ToInt32((sender as ToolStripMenuItem).Tag);
-            pictureBox.Image = selectedHandWritingResolver.GetLine(lineIndex).Image;
+            var line = selectedHandWritingResolver.GetLine(lineIndex);
+            if (line != null)
+            {
+                selectedLine = line;
+                pictureBox.Image = line.Image;
+                displayLineInfo(line);
+            }
+        }
+
+        private void displayLineInfo(Line line)
+        {
+            infoListBox.Items.Clear();
+            infoListBox.Items.Add("Line:");
+            infoListBox.Items.Add("Blocks:" + line.BlocksCount);
         }
 
         private void customizeContextMenu()
@@ -62,6 +77,14 @@ namespace ImagesProcessing
         private void showSourceImage(object sender, EventArgs e)
         {
             pictureBox.Image = selectedHandWritingResolver.SourceImage;
+            displaySourceImageInfo(selectedHandWritingResolver);
+        }
+
+        private void displaySourceImageInfo(HandWritingResolver resolver)
+        {
+            infoListBox.Items.Clear();
+            infoListBox.Items.Add("Text:");
+            infoListBox.Items.Add("Lines:" + resolver.LinesCount);
         }
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
@@ -126,6 +149,15 @@ namespace ImagesProcessing
                 metricsDataGridView);
 
             tabControl1.SelectTab(tabPage3);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int number;
+            if (Int32.TryParse(blockNumberTextBox.Text, out number) && selectedLine != null)
+            {
+                blockPictureBox.Image = selectedLine.GetBlock(number).Image;
+            }
         }
     }
 }

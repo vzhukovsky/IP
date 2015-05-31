@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -16,7 +17,6 @@ namespace ImageProcessingBLL.BinaryImages.HandWriting
 
         public HandWritingResolver(Bitmap image)
         {
-
             this.image = new Bitmap(image);
             this.originalImage = new Bitmap(image);
             LinesDeviders();
@@ -44,7 +44,9 @@ namespace ImageProcessingBLL.BinaryImages.HandWriting
                         prevContour == null ? 0 : prevContour.Max(obj => obj.X) + 1, startPoint);
                     if (prevContour != null)
                     {
-                        line.AddBlock(new Block(prevContour));
+                        var block = new Block(prevContour);
+                        SetBlockImage(block);
+                        line.AddBlock(block);
                     }
                 } while (prevContour != null);
 
@@ -63,6 +65,16 @@ namespace ImageProcessingBLL.BinaryImages.HandWriting
                 rightBorder.Y - leftBorder.Y);
 
             line.Image = image.Clone(rect, PixelFormat.Format24bppRgb);
+        }
+
+        private void SetBlockImage(Block block)
+        {
+            var leftBorder = block.LeftBorder();
+            var rightBorder = block.RightBorder();
+            var rect = new Rectangle(leftBorder.X, leftBorder.Y, rightBorder.X - leftBorder.X,
+                rightBorder.Y - leftBorder.Y);
+
+            block.Image = image.Clone(rect, PixelFormat.Format24bppRgb);
         }
 
         public int LinesCount
@@ -208,7 +220,31 @@ namespace ImageProcessingBLL.BinaryImages.HandWriting
             return SampleMeanSquare(values, average);
         }
 
-        
+
+        public double SampleMeanLeftPadding()
+        {
+            return lines.Average(obj => obj.GetLeftPadding());
+        }
+
+        public double SampleMeanSquareLeftPadding()
+        {
+            var average = SampleMeanLeftPadding();
+            var values = lines.Select(obj => obj.GetLeftPadding()).ToList();
+            return SampleMeanSquare(values, average);
+        }
+
+        public double SampleMeanRightPadding()
+        {
+            return lines.Average(obj => obj.GetRightPadding(originalImage.Width));
+        }
+
+        public double SampleMeanSquareRightPadding()
+        {
+            var average = SampleMeanLeftPadding();
+            var values = lines.Select(obj => obj.GetRightPadding(originalImage.Width)).ToList();
+            return SampleMeanSquare(values, average);
+        }
+
         #endregion
 
         public List<object> GetRow()
@@ -227,6 +263,10 @@ namespace ImageProcessingBLL.BinaryImages.HandWriting
             items.Add(SampleMeanSquareCountBlocks());
             items.Add(SampleMeanLineItemSize());
             items.Add(SampleMeanSquareLineItemSize());
+            items.Add(SampleMeanLeftPadding());
+            items.Add(SampleMeanSquareLeftPadding());
+            items.Add(SampleMeanRightPadding());
+            items.Add(SampleMeanSquareRightPadding());
 
             return items;
         }

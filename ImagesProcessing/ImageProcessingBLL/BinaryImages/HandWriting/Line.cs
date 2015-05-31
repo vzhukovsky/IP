@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Security.Policy;
@@ -58,6 +59,16 @@ namespace ImageProcessingBLL.BinaryImages.HandWriting
             {
                 return blocks.Count;
             }
+        }
+
+        public Block GetBlock(int index)
+        {
+            if (index < blocks.Count)
+            {
+                return blocks[index];
+            }
+
+            throw new NoNullAllowedException();
         }
 
         public double AverabeBlocksHeight
@@ -128,6 +139,16 @@ namespace ImageProcessingBLL.BinaryImages.HandWriting
         {
             var averageHeight = blocks.Average(obj => obj.Height);
             return blocks.Where(obj => obj.Height < averageHeight).Average(obj => obj.Height);
+        }
+
+        public double GetLeftPadding()
+        {
+            return blocks.Min(obj => obj.Points.Min(coord => coord.X));
+        }
+
+        public double GetRightPadding(int sourceImageWidth)
+        {
+            return sourceImageWidth - blocks.Max(obj => obj.Points.Max(coord => coord.X));
         }
     }
 }

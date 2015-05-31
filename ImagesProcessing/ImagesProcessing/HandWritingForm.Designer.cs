@@ -67,6 +67,14 @@ namespace ImagesProcessing
             this.additionTableGridView = new System.Windows.Forms.DataGridView();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.metricsDataGridView = new System.Windows.Forms.DataGridView();
+            this.infoListBox = new System.Windows.Forms.ListBox();
+            this.blockPictureBox = new System.Windows.Forms.PictureBox();
+            this.blockNumberTextBox = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -83,6 +91,7 @@ namespace ImagesProcessing
             ((System.ComponentModel.ISupportInitialize)(this.additionTableGridView)).BeginInit();
             this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.metricsDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.blockPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -137,19 +146,20 @@ namespace ImagesProcessing
             // loadImageToolStripMenuItem1
             // 
             this.loadImageToolStripMenuItem1.Name = "loadImageToolStripMenuItem1";
-            this.loadImageToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.loadImageToolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
             this.loadImageToolStripMenuItem1.Text = "Load image";
             this.loadImageToolStripMenuItem1.Click += new System.EventHandler(this.loadImageToolStripMenuItem1_Click);
             // 
             // buildTablesToolStripMenuItem
             // 
             this.buildTablesToolStripMenuItem.Name = "buildTablesToolStripMenuItem";
-            this.buildTablesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.buildTablesToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.buildTablesToolStripMenuItem.Text = "Build tables";
             this.buildTablesToolStripMenuItem.Click += new System.EventHandler(this.buildTablesToolStripMenuItem_Click);
             // 
             // pictureBox
             // 
+            this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBox.Location = new System.Drawing.Point(12, 27);
             this.pictureBox.Name = "pictureBox";
             this.pictureBox.Size = new System.Drawing.Size(754, 211);
@@ -176,7 +186,11 @@ namespace ImagesProcessing
             this.Column9,
             this.Column10,
             this.Column11,
-            this.Column12});
+            this.Column12,
+            this.Column13,
+            this.Column14,
+            this.Column15,
+            this.Column16});
             this.dataGridView1.Location = new System.Drawing.Point(12, 256);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(1081, 209);
@@ -370,11 +384,68 @@ namespace ImagesProcessing
             this.metricsDataGridView.Size = new System.Drawing.Size(1065, 223);
             this.metricsDataGridView.TabIndex = 0;
             // 
+            // infoListBox
+            // 
+            this.infoListBox.FormattingEnabled = true;
+            this.infoListBox.Location = new System.Drawing.Point(772, 27);
+            this.infoListBox.Name = "infoListBox";
+            this.infoListBox.Size = new System.Drawing.Size(185, 69);
+            this.infoListBox.TabIndex = 4;
+            // 
+            // blockPictureBox
+            // 
+            this.blockPictureBox.Location = new System.Drawing.Point(772, 102);
+            this.blockPictureBox.Name = "blockPictureBox";
+            this.blockPictureBox.Size = new System.Drawing.Size(183, 107);
+            this.blockPictureBox.TabIndex = 5;
+            this.blockPictureBox.TabStop = false;
+            // 
+            // blockNumberTextBox
+            // 
+            this.blockNumberTextBox.Location = new System.Drawing.Point(773, 216);
+            this.blockNumberTextBox.Name = "blockNumberTextBox";
+            this.blockNumberTextBox.Size = new System.Drawing.Size(100, 20);
+            this.blockNumberTextBox.TabIndex = 6;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(880, 216);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "Get block";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // Column13
+            // 
+            this.Column13.HeaderText = "ВС отступа слева";
+            this.Column13.Name = "Column13";
+            // 
+            // Column14
+            // 
+            this.Column14.HeaderText = "ВСКО отступа слева";
+            this.Column14.Name = "Column14";
+            // 
+            // Column15
+            // 
+            this.Column15.HeaderText = "ВС отступа справа";
+            this.Column15.Name = "Column15";
+            // 
+            // Column16
+            // 
+            this.Column16.HeaderText = "ВСКО отступа справа";
+            this.Column16.Name = "Column16";
+            // 
             // HandWritingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1109, 743);
+            this.ClientSize = new System.Drawing.Size(1109, 741);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.blockNumberTextBox);
+            this.Controls.Add(this.blockPictureBox);
+            this.Controls.Add(this.infoListBox);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.pictureBox);
@@ -399,6 +470,7 @@ namespace ImagesProcessing
             ((System.ComponentModel.ISupportInitialize)(this.additionTableGridView)).EndInit();
             this.tabPage6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.metricsDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.blockPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -443,5 +515,13 @@ namespace ImagesProcessing
         private ToolStripMenuItem recognitionToolStripMenuItem;
         private ToolStripMenuItem loadImageToolStripMenuItem1;
         private ToolStripMenuItem buildTablesToolStripMenuItem;
+        private ListBox infoListBox;
+        private PictureBox blockPictureBox;
+        private TextBox blockNumberTextBox;
+        private Button button1;
+        private DataGridViewTextBoxColumn Column13;
+        private DataGridViewTextBoxColumn Column14;
+        private DataGridViewTextBoxColumn Column15;
+        private DataGridViewTextBoxColumn Column16;
     }
 }

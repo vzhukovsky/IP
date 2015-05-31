@@ -8,6 +8,12 @@ namespace ImageProcessingBLL.BinaryImages
     {
         private List<Point> block;
 
+        public Bitmap Image
+        {
+            get;
+            set;
+        }
+
         public Block(List<Point> block)
         {
             this.block = block;
@@ -51,6 +57,22 @@ namespace ImageProcessingBLL.BinaryImages
             {
                 return block.Max(obj => obj.Y) - block.Min(obj => obj.Y);
             }
+        }
+
+        public Point LeftBorder()
+        {
+            int XMin = block.Min(coord => coord.X);
+            int YMin = block.Min(coord => coord.Y);
+
+            return new Point(XMin, YMin);
+        }
+
+        public Point RightBorder()
+        {
+            int XMax = block.Max(coord => coord.X);
+            int YMax = block.Max(coord => coord.Y);
+
+            return new Point(XMax, YMax);
         }
     }
 }
